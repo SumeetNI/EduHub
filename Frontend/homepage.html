@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduHub - Future of Learning</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -250px;
+            right: -250px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -200px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(100px, -100px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 100px) scale(0.9);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            animation: slideDown 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            line-height: 1.8;
+            animation: fadeInUp 1s 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s 0.6s both;
+        }
+
+        .btn-large {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            animation: fadeInUp 1s 0.8s both;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* Subjects Section */
+        .subjects {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .subject-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s;
+        }
+
+        .subject-card:hover::before {
+            transform: scale(1);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.6);
+        }
+
+        .subject-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: transform 0.4s;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .subject-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+            padding: 5rem 3rem;
+            border-radius: 40px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .features-grid,
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span>📚</span> EduHub
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="subjects.html">Subjects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 The Future of Education is Here</div>
+            <h1>
+                Learn Smarter with <br>
+                <span class="gradient-text">EduHub Platform</span>
+            </h1>
+            <p>
+                Access premium study materials, connect with fellow learners, and achieve your academic goals with our
+                cutting-edge learning platform.
+            </p>
+            <div class="hero-buttons">
+                <a href="subjects.html" class="btn btn-primary btn-large btn-icon">
+                    <span>🎯</span> Explore Subjects
+                </a>
+                <a href="signup.html" class="btn btn-secondary btn-large btn-icon">
+                    <span>✨</span> Start Learning Free
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">10k+</div>
+            <div class="stat-label">Active Students</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Study Materials</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Subjects</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Success Rate</div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-header">
+            <div class="section-badge">✨ Features</div>
+            <h2 class="section-title">Everything You Need to Succeed</h2>
+            <p class="section-subtitle">Powerful tools and resources designed to accelerate your learning journey</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎓</div>
+                <h3>Premium Content</h3>
+                <p>Access thousands of high-quality study materials, notes, and resources created by top educators and
+                    students.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Instantly find what you need with our powerful search and smart categorization system.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your data is protected with enterprise-grade security. Learn with peace of mind.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h3>Community Powered</h3>
+                <p>Join thousands of students sharing knowledge and helping each other succeed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Cross Platform</h3>
+                <p>Access your materials anywhere - desktop, tablet, or mobile. Always in sync.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Personalized Learning</h3>
+                <p>AI-powered recommendations help you discover the best materials for your needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section class="subjects">
+        <div class="section-header">
+            <div class="section-badge">📚 Subjects</div>
+            <h2 class="section-title">Explore Our Subjects</h2>
+            <p class="section-subtitle">Comprehensive coverage across all major academic disciplines</p>
+        </div>
+        <div class="subjects-grid">
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">🌐</div>
+                <h3>Internet of Things</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">IOT</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">🔧</div>
+                <h3>IOT Lab</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">Practical Sessions</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">☁️</div>
+                <h3>Pervasive Computing</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">PC</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">⚙️</div>
+                <h3>PC Lab</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">Hands-on Practice</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">📊</div>
+                <h3>Big Data Analytics</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">BDA</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">🔐</div>
+                <h3>Cryptography & Network Security</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">CNS</p>
+            </div>
+            <div class="subject-card" onclick="location.href='subjects.html'">
+                <div class="subject-icon">🧠</div>
+                <h3>Internet & Mobile Tech</h3>
+                <p style="opacity: 0.7; margin-top: 0.5rem; font-size: 0.9rem;">INTM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-box">
+            <h2>Ready to Transform Your Learning?</h2>
+            <p>Join thousands of students already achieving their academic goals</p>
+            <a href="signup.html" class="btn btn-primary btn-large">Get Started Now - It's Free! 🚀</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>📚 EduHub</h4>
+                <p style="opacity: 0.7; line-height: 1.8;">Empowering students worldwide with quality education and
+                    study materials.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="subjects.html">Subjects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <div class="footer-links">
+                    <a href="#">Study Materials</a>
+                    <a href="#">Community</a>
+                    <a href="#">Blog</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 EduHub. Made with ❤️ for students worldwide.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
